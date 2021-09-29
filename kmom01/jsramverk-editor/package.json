@@ -1,0 +1,24 @@
+{
+  "name": "jsramverk-editor",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": ".",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "deploy": "npm run build && rsync -av --delete dist/ rere20@ssh.student.bth.se:www/editor"
+  },
+  "dependencies": {
+    "@tinymce/tinymce-vue": "^4.0.4",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
