@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/b2a0f454-6a45-481c-aa6c-ca40ac3a9031/AppServices/subscriptions/b2a0f454-6a45-481c-aa6c-ca40ac3a9031/resourceGroups/jsramverk-editor-rere20/providers/Microsoft.Web/sites/jsramverk-editor-rere20",
+    "appService.deploySubpath": "text-editor-backend"
+}
