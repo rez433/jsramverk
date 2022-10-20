@@ -1,22 +1,25 @@
-import React from "react";
-import { useState } from "react";
-import "react-quill/dist/quill.snow.css";
-import Header from "./Header";
-import TxtEditor from "./TxtEditor";
-import Nav from "./Nav";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Header from './components/Header'
+import Dashboard from './pages/Dashboard'
+import Editor from './pages/Editor'
+import Register from './pages/Register'
 
-export default function App() {
-    const [value, setValue] = useState("");
-
-    function prnt() {
-        console.log(value);
-    }
-
-    return (
-        <main>
-            <Header />
-            <Nav prnt={prnt} />
-            <TxtEditor setValue={setValue} />
-        </main>
-    );
+function App() {
+  return (
+    <>
+      <Router>
+        <div className='container'>
+          <Header />
+          {/* some */}
+          <Routes>
+            <Route path='/' element={<Dashboard />} />
+            <Route path='/editor/:id' element={<Editor />} />
+            <Route path='/register' element={<Register />} />
+          </Routes>
+        </div>
+      </Router>
+    </>
+  )
 }
+
+export default App
