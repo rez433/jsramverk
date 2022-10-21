@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, HashRouter } from 'react-router-dom'
 import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Editor from './pages/Editor'
@@ -7,7 +7,7 @@ import Register from './pages/Register'
 function App() {
   return (
     <>
-      <Router>
+      <Router basename='/~rere20/editor/'>
         <div className='container'>
           <Header />
           {/* some */}
