@@ -26,7 +26,7 @@ jobs:
       uses: actions/setup-node@v3
       id: filter
       with:
-        filters: 'me/jsramverk-backend/text-editor-backend/'
+        filters: 'me/jsramverk-backend/text-editor-backend/**'
         node-version: ${{ matrix.node-version }}
         run: npm install
         cache: 'npm'
@@ -34,8 +34,9 @@ jobs:
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.8.0
       with:
+        filters: 'me/jsramverk-backend/text-editor-backend/**'
         mongodb-version: ${{ matrix.mongodb-version }}
+        run: npm test
         
     
-    - run: npm test
     
