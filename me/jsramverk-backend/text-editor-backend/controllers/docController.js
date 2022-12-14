@@ -1,12 +1,13 @@
 const Doc = require('../models/Docmnt');
 const mongoose = require('mongoose');
 
-
 // Get all Docs
-const getDox = async (req, res) => {
+const getDox = async (req, res, next) => {
+    // getting docs and sorting them by created time
     const dox = await Doc.find({}).sort({createdAt: -1});
 
     res.status(200).json(dox);
+    next();
 }
 
 // Get single Doc
@@ -18,10 +19,6 @@ const getDoc = async (req, res) => {
     }
 
     const doc = await Doc.findById(id);
-
-    if (!doc) {
-        return res.status(404).json({error: 'No Such A Document Found!'})
-    }
 
     res.status(200).json(doc);
 }
@@ -58,11 +55,7 @@ const delDoc = async (req, res) => {
 
     const doc = await Doc.findByIdAndDelete({_id: id})
 
-    if (!doc) {
-        return res.status(404).json({error: 'No Such A Document Found!'})
-    }
-
-    res.status(200).json(doc);
+    res.status(204).json(doc);
 }
 
 
@@ -79,13 +72,8 @@ const upd8Doc = async (req, res) => {
         ...req.body
     })
 
-    if (!doc) {
-        return res.status(404).json({error: 'No Such A Document Found!'})
-    }
-
     res.status(200).json(doc);
 }
-
 
 module.exports = {
     getDox,

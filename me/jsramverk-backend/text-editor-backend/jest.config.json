@@ -1,0 +1,5 @@
+{
+	"testRegex": "((\\.|/*.)(test))\\.js?$",
+	"bail": 1,
+	"verbose": true
+}

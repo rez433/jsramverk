@@ -10,7 +10,6 @@ router.get('/', getDox);
 // Get one Doc
 router.get('/:id', getDoc);
 
-
 // Post a new Doc
 router.post('/create', cr8Doc);
 
@@ -19,5 +18,7 @@ router.patch('/:id', upd8Doc);
 
 // Delete a Doc
 router.delete('/:id', delDoc);
+
+
 
 module.exports = router;
