@@ -1,0 +1,54 @@
+name: Node.js CI
+
+on:
+  push:
+    paths:
+      - '**.js'
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'me/jsramverk-backend/text-editor-backend'
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+        mongodb-version: ['4.4', '5.0', '6.0']
+
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'me/jsramverk-backend/text-editor-backend/**'
+            frontend:
+              - 'me/jsramverk-editor/text-editor/**'
+        
+          
+  # JOB to install and test backend
+  backend:
+    needs: changes
+    if: ${{ needs.changes.outputs.backend == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install Dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+
+      - run: npm install
+      - run: npm test
