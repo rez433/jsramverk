@@ -23,7 +23,9 @@
     "mongoose",
     "expressjs",
     "mongodb",
-    "nodejs"
+    "nodejs",
+    "jest",
+    "supertest"
   ],
   "author": "Rezaee",
   "license": "ISC",
