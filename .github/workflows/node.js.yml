@@ -10,9 +10,9 @@ on:
 jobs:
   changes:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'me/jsramverk-backend/text-editor-backend'
+#    defaults:
+#       run:
+#         working-directory: 'me/jsramverk-backend/text-editor-backend'
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
