@@ -1,6 +1,6 @@
 {
   "name": "jsramverk-editor-backend",
-  "version": "1.0.0",
+  "version": "2.2.0",
   "description": "Text Editor built with MERN stack",
   "main": "server.js",
   "jest": {
