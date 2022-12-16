@@ -1,14 +1,15 @@
-require('dotenv').config();
 const mongoose = require( "mongoose" );
 const request = require( "supertest" );
 const Doc = require('../models/Docmnt');
 const {app} = require("../app");
 
 
-/* Connecting to the database before each test. */
+/* Connecting to the database before all test. */
 beforeEach( async () =>
 {
-    await mongoose.connect( process.env.MONGO_URI );
+    await mongoose.connect('mongodb://localhost/testDB',{
+        useNewUrlParser: true 
+    })
 });
 
 /* Closing database connection after each test. */
@@ -18,36 +19,43 @@ afterEach( async () =>
 } );
 
 
+const firstDoc = {
+    title: "*** First Document Title ***",
+    text: "Using supertest to test POST endpoint",
+    falseId: "634dcb3b881e578a2f7xxxx0",
+    n0ValidId: "falseId123",
+}
+
+
 describe('GET /api/docs', () => {
     it ('should return all docs and status code 200', async() => {
-        const resp = await request(app).get('/api/docs');
+        await Doc.create({
+            title: firstDoc.title,
+            text: firstDoc.text
+        })
 
-        expect(resp.status).toBe(200);
-        return resp;
+        await request(app)
+        .get('/api/docs')
+        .then(async (res) => {
+            expect(res.status).toEqual(200)
+        })
     })
 })
 
 
-
-
-const firstPost = {
-    id: "634dcb3b881e578a2f7dbec0",
-    title: "First Post",
-    text: "First Post from inside react quill uploaded to student server.",
-    falseId: "634dcb3b881e578a2f7xxxx0",
-    n0ValidId: "falseId123",
-
-}
-
-
 describe('GET /api/docs/:id', () => {
-    it ('should return a doc matching firstPost.id and status code 200', async() => {
+    it ('should return a doc matching firstDoc.id and status code 200', async() => {
+        const doc = await Doc.create({
+            title: firstDoc.title,
+            text: firstDoc.text
+        })
 
-        const testDoc = await request(app).get(`/api/docs/${firstPost.id}`);
-        expect(testDoc.status).toEqual(200)
-        expect(testDoc.body._id).toEqual(firstPost.id)
-        expect(testDoc.body.title).toEqual(firstPost.title)
-            
+        await request(app)
+        .get(`/api/docs/${doc._id}`)
+        .then(async (res) => {
+            expect(res.status).toEqual(200)
+            expect(res.body.title).toEqual(doc.title)
+        })
     })
 })
 
@@ -55,7 +63,7 @@ describe('GET /api/docs/:id', () => {
 describe('GET /api/docs/:id', () => {
     it ('should return a 404 if document is not found on database', async() => {
 
-        const testDoc = await request(app).get(`/api/docs/${firstPost.falseId}`);
+        const testDoc = await request(app).get(`/api/docs/${firstDoc.falseId}`);
         expect(testDoc.status).toEqual(404)
         expect(testDoc._body.error).toEqual('The id is not valid id')
     })
@@ -65,7 +73,7 @@ describe('GET /api/docs/:id', () => {
 describe('GET /api/docs/:id', () => {
     it ('should return a 404 if document id is not a valid monogDB id',() => {
 
-        expect(mongoose.Types.ObjectId.isValid(firstPost.n0ValidId)).toBeFalsy()
+        expect(mongoose.Types.ObjectId.isValid(firstDoc.n0ValidId)).toBeFalsy()
     })
 })
 
