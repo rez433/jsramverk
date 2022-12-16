@@ -4,7 +4,7 @@
   "description": "jsramverk editor built with MERN stack",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./me/jsramverk-backend/text-editor-backend --detectOpenHandles --coverage --config ./backend/jest.config.json  --testTimeout=10000",
+    "test": "jest ./me/jsramverk-backend/text-editor-backend --detectOpenHandles --coverage --config ./me/jsramverk-backend/text-editor-backend/jest.config.json  --testTimeout=10000",
     "start": "node ./me/jsramverk-backend/text-editor-backend/server.js",
     "server": "nodemon ./me/jsramverk-backend/text-editor-backend/server.js",
     "client": "npm start --prefix frontend",
